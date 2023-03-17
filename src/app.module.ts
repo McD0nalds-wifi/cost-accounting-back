@@ -10,6 +10,8 @@ import { AuthModule } from './auth/auth.module';
 // import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
+import { TransactionsModule } from './transactions/transactions.module';
+import { Transaction } from './transactions/transactions.model';
 
 @Module({
   controllers: [],
@@ -28,12 +30,16 @@ import * as path from 'path';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRESS_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles],
+      models: [User, Role, UserRoles, Transaction],
       autoLoadModels: true,
+      dialectOptions: {
+        supportBigNumbers: true,
+      },
     }),
     UsersModule,
     RolesModule,
     AuthModule,
+    TransactionsModule,
     // FilesModule,
   ],
 })
