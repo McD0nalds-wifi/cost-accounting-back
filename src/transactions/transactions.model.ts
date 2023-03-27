@@ -55,8 +55,8 @@ export class Transaction extends Model<Transaction, TransactionCreationAttrs> {
   @Column({ type: DataType.INTEGER, allowNull: false })
   amount: number;
 
-  @ApiProperty({ example: 1677660803000, description: 'Дата в миллисекундах' })
-  @Column({ type: DataType.BIGINT, allowNull: false })
+  @ApiProperty({ example: 1677660803, description: 'Дата в секундах' })
+  @Column({ type: DataType.DATE, allowNull: false })
   date: number;
 
   @BelongsTo(() => User, 'userId')
