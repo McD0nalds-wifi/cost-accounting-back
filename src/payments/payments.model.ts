@@ -7,9 +7,8 @@ import {
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../users/users.model';
-// import { UserTransactions } from './user-transactions.model';
 
-interface TransactionCreationAttrs {
+interface PaymentCreationAttrs {
   name: string;
   business: string;
   category: string;
@@ -18,8 +17,8 @@ interface TransactionCreationAttrs {
   date: number;
 }
 
-@Table({ tableName: 'transactions' })
-export class Transaction extends Model<Transaction, TransactionCreationAttrs> {
+@Table({ tableName: 'payments' })
+export class Payment extends Model<Payment, PaymentCreationAttrs> {
   @ApiProperty({ example: 1, description: 'Уникальный идентификатор' })
   @Column({
     type: DataType.INTEGER,
@@ -46,10 +45,6 @@ export class Transaction extends Model<Transaction, TransactionCreationAttrs> {
   })
   @Column({ type: DataType.STRING, allowNull: false })
   category: string;
-
-  @ApiProperty({ example: 'expenses', description: 'Зачисление или списание' })
-  @Column({ type: DataType.STRING, allowNull: false })
-  type: string;
 
   @ApiProperty({ example: 299, description: 'Сумма зачисления или списания' })
   @Column({ type: DataType.INTEGER, allowNull: false })

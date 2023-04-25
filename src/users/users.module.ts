@@ -7,16 +7,25 @@ import { Role } from '../roles/roles.model';
 import { UserRoles } from '../roles/user-roles.model';
 import { RolesModule } from '../roles/roles.module';
 import { AuthModule } from '../auth/auth.module';
-import { Transaction } from '../transactions/transactions.model';
-import { TransactionsModule } from 'src/transactions/transactions.module';
+import { Payment } from '../payments/payments.model';
+import { PaymentsModule } from 'src/payments/payments.module';
+import { RegularPaymentsModule } from '../regular-payments/regular-payments.module';
+import { RegularPayment } from '../regular-payments/regular-payments.model';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService],
   imports: [
-    SequelizeModule.forFeature([User, Role, UserRoles, Transaction]),
+    SequelizeModule.forFeature([
+      User,
+      Role,
+      UserRoles,
+      Payment,
+      RegularPayment,
+    ]),
     RolesModule,
-    TransactionsModule,
+    PaymentsModule,
+    RegularPaymentsModule,
     forwardRef(() => AuthModule),
   ],
   exports: [UsersService],

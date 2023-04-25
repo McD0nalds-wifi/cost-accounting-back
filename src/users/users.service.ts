@@ -41,6 +41,26 @@ export class UsersService {
     };
   }
 
+  async topUpBalance(email: string, balance: number) {
+    const user = await this.getUserByEmail(email);
+
+    if (!user) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    }
+
+    user.balance = user.balance + balance;
+    await user.save();
+
+    return {
+      id: user.id,
+      email: user.email,
+      fullname: user.fullname,
+      balance: user.balance,
+      spending: user.spending,
+      saved: user.saved,
+    };
+  }
+
   async getAllUsers() {
     const users = await this.userRepository.findAll({ include: { all: true } });
 

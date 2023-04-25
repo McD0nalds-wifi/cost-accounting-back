@@ -8,30 +8,30 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { TransactionsService } from './transactions.service';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { PaymentsService } from './payments.service';
+import { CreatePaymentDto } from './dto/create-payment.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Transaction } from './transactions.model';
+import { Payment } from './payments.model';
 
-@Controller('transactions')
-export class TransactionsController {
-  constructor(private transactionService: TransactionsService) {}
+@Controller('payments')
+export class PaymentsController {
+  constructor(private paymentService: PaymentsService) {}
 
-  @ApiOperation({ summary: 'Создать транзакцию' })
-  @ApiResponse({ status: 200, type: Transaction })
+  @ApiOperation({ summary: 'Создать платеж' })
+  @ApiResponse({ status: 200, type: Payment })
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Req() req: Request, @Body() dto: CreateTransactionDto) {
+  create(@Req() req: Request, @Body() dto: CreatePaymentDto) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const { user } = req;
 
-    return this.transactionService.createTransaction(dto, user.email);
+    return this.paymentService.createPayment(dto, user.email);
   }
 
-  @ApiOperation({ summary: 'Получить транзакции пользователя' })
-  @ApiResponse({ status: 200, type: [Transaction] })
+  @ApiOperation({ summary: 'Получить список расходов пользователя' })
+  @ApiResponse({ status: 200, type: [Payment] })
   @UseGuards(JwtAuthGuard)
   @Get()
   getAll(
@@ -48,7 +48,7 @@ export class TransactionsController {
     // @ts-ignore
     const { user } = req;
 
-    return this.transactionService.getTransactions(
+    return this.paymentService.getPayments(
       user.email,
       query.dateFrom,
       query.dateTo,

@@ -10,8 +10,11 @@ import { AuthModule } from './auth/auth.module';
 // import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
-import { TransactionsModule } from './transactions/transactions.module';
-import { Transaction } from './transactions/transactions.model';
+import { PaymentsModule } from './payments/payments.module';
+import { Payment } from './payments/payments.model';
+import { ScheduleModule } from '@nestjs/schedule';
+import { RegularPaymentsModule } from './regular-payments/regular-payments.module';
+import { RegularPayment } from './regular-payments/regular-payments.model';
 
 @Module({
   controllers: [],
@@ -30,7 +33,7 @@ import { Transaction } from './transactions/transactions.model';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRESS_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles, Transaction],
+      models: [User, Role, UserRoles, Payment, RegularPayment],
       autoLoadModels: true,
       dialectOptions: {
         supportBigNumbers: true,
@@ -39,7 +42,9 @@ import { Transaction } from './transactions/transactions.model';
     UsersModule,
     RolesModule,
     AuthModule,
-    TransactionsModule,
+    PaymentsModule,
+    RegularPaymentsModule,
+    ScheduleModule.forRoot(),
     // FilesModule,
   ],
 })

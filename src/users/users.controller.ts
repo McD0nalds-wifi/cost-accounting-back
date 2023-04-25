@@ -41,6 +41,18 @@ export class UsersController {
     return this.usersService.getUserData(user.email);
   }
 
+  @ApiOperation({ summary: 'Пополнить баланс пользователя' })
+  @ApiResponse({ status: 200, type: User })
+  @UseGuards(JwtAuthGuard)
+  @Post('/topUpBalance')
+  topUpBalance(@Req() req: Request, @Body() data: { balance: number }) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const { user } = req;
+
+    return this.usersService.topUpBalance(user.email, data.balance);
+  }
+
   @ApiOperation({ summary: 'Получить всех пользователей' })
   @ApiResponse({ status: 200, type: [User] })
   @Roles('ADMIN')
